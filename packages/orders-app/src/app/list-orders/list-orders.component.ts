@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ErrorMessageService } from '../error-message.service';
+import { ErrorMessageService } from '../_services/error-message.service';
 
 @Component({
   selector: 'app-list-orders',

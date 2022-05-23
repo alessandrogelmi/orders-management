@@ -1,18 +1,25 @@
 <div style="display: flex; width: 100%; height: calc(100vh - 48px); justify-content: center; align-items: center;">
-    <form style="width: 50%;">
+    <form (submit)="handleSubmit()" style="width: 50%;">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <label for="username" class="form-label">Username</label>
+            <input [(ngModel)]="user.username" #username="ngModel" type="text" name="username" class="form-control"
+                required>
+            <ng-container *ngIf="username?.invalid">
+                <span *ngIf="username.errors?.['required']" class="alert text-danger">
+                    Username is required
+                </span>
+            </ng-container>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="password" class="form-label">Password</label>
+            <input [(ngModel)]="user.password" #password="ngModel" type="password" class="form-control" name="password"
+                id="password" required>
+            <ng-container *ngIf="password?.invalid">
+                <span *ngIf="password.errors?.['required']" class="alert text-danger">
+                    Password is required
+                </span>
+            </ng-container>
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary" (click)="handleSubmit">Submit</button>
+        <button [disabled]="username.invalid || password.invalid" class="btn btn-primary">Submit</button>
     </form>
 </div>

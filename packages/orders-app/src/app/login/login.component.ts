@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../classes/user';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -6,11 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  user: User = new User();
+  loading: boolean = false;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
-  handleSubmit(event: any) {
-    console.log(event);
+  handleSubmit() {
+    console.log('submit');
+    this.loading = true;
+    console.log({ user: this.user.username, pass: this.user.password });
+    this.authService.login(this.user);
   }
 }
