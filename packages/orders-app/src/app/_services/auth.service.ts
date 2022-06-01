@@ -33,7 +33,6 @@ export class AuthService {
       .subscribe(
         (data) => {
           const token = (data as Token).token;
-          console.log({ token });
           sessionStorage.setItem('auth_token', token);
           this.userSubject.next(data as Token);
         },
@@ -53,5 +52,9 @@ export class AuthService {
     } else {
       return true;
     }
+  }
+
+  getToken() {
+    return sessionStorage.getItem('auth_token');
   }
 }
