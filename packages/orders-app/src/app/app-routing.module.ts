@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateOrderComponent } from './create-order/create-order.component';
 import { ListOrdersComponent } from './list-orders/list-orders.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuardService } from './_helpers/authFilter';
 
 const routes: Routes = [
   {
@@ -13,10 +14,12 @@ const routes: Routes = [
   {
     path: 'list-orders',
     component: ListOrdersComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'create-order',
     component: CreateOrderComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'login',

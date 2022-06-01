@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subject } from 'rxjs';
 import { Token } from '../classes/token';
 import { User } from '../classes/user';
@@ -22,16 +23,35 @@ export class AuthService {
       password: user.password,
     };
 
+    let httpHeaders = new HttpHeaders();
+    httpHeaders = httpHeaders.set('Content-Type', 'application/json');
+
     this.httpClient
-      .post('http://localhost:8080/spring-auth/auth', credentials)
+      .post('http://localhost:8080/spring-auth/auth', credentials, {
+        headers: httpHeaders,
+      })
       .subscribe(
         (data) => {
-          sessionStorage.setItem('auth_token', JSON.stringify(data));
+          const token = (data as Token).token;
+          console.log({ token });
+          sessionStorage.setItem('auth_token', token);
           this.userSubject.next(data as Token);
         },
         (error) => {
           this.messageService.error(error.error.message);
         }
       );
+  }
+
+  isLogged() {
+    console.log('check token');
+    let jwtHelper = new JwtHelperService();
+    let token = sessionStorage.getItem('auth_token');
+
+    if (!token || jwtHelper.isTokenExpired(token)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

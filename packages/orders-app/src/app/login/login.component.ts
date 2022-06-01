@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   handleSubmit() {
-    console.log('submit');
     this.loading = true;
     console.log({ user: this.user.username, pass: this.user.password });
     this.authService.login(this.user);

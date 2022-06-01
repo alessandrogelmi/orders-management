@@ -12,7 +12,6 @@ export class AppComponent {
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.userSubject.subscribe((token) => {
-      console.log('token', token);
       if (token) {
         this.router.navigateByUrl('/');
       } else {
